@@ -10,11 +10,14 @@ class CustomColors{
   static const blackLightTextColor = Color(0xFF333348);
   static const blackLight2TextColor = Color(0xFF898A8F);
   static const blackLight3TextColor = Color(0xFF3F4079);
+  static const blackDark1TextColor = Color(0xFF313450);
+  static const blueTextColor = Color(0xFF7A3FE1);
 
 //  icon
   static const iconNotSelected = Color(0xFFB0B3D0);
   static const iconSelected = Color(0xFF3A58FC);
   static const icon2 = Color(0xFFABC5EA);
+  static const stoke = Color(0xFFE5D6FF);
 
 //  shadow
   static const shadowColor = Color.fromRGBO(0, 0, 0, 0.25);
