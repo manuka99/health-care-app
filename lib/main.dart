@@ -1,9 +1,8 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:doctor_nest/common/custom_colors.dart';
 import 'package:doctor_nest/pages/dashboard/main.dart';
 import 'package:doctor_nest/pages/intro/main.dart';
 import 'package:doctor_nest/pages/register/main.dart';
-import 'package:doctor_nest/pages/splash/splash.dart';
+import 'package:doctor_nest/pages/register/mobile/main.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +16,9 @@ class DoctorNest extends StatelessWidget {
       initialRoute: "/intro",
       routes: {
         "/": (context) => HomeDashBoard(),
-        "/intro": (context) => IntroScreen()
+        "/intro": (context) => IntroScreen(),
+        "/register": (context) => RegisterHome(),
+        "/register/mobile": (context) => RegisterMobile()
       },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

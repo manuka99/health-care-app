@@ -85,31 +85,30 @@ class _IntroScreenState extends State<IntroScreen> {
 
   void onDonePress() {
     // Do what you want
-    Navigator.pushNamed(context, "/");
+    Navigator.pushNamedAndRemoveUntil(context, "/register", (r)=>false);
   }
 
   @override
   Widget build(BuildContext context) {
     return new IntroSlider(
-      slides: this.slides,
-      showDotIndicator: true,
-      showNextBtn: false,
-      onDonePress: this.onDonePress,
-      showSkipBtn: false,
-      showDoneBtn: true,
-      renderDoneBtn: Text("Get started",
-          style: TextStyle(
-              fontSize: 14,
+        slides: this.slides,
+        showDotIndicator: true,
+        showNextBtn: false,
+        onDonePress: this.onDonePress,
+        showSkipBtn: false,
+        showDoneBtn: true,
+        renderDoneBtn: Text("Get started"),
+        doneButtonStyle: OutlinedButton.styleFrom(
+          textStyle: TextStyle(
+              fontSize: 12,
               fontFamily: "Poppins",
               fontWeight: FontWeight.w600,
-              color: CustomColors.blueTextColor)),
-      doneButtonStyle: OutlinedButton.styleFrom(
-        padding: EdgeInsets.all(10),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14.0),
-        ),
-        side: BorderSide(width: 1, color: CustomColors.blueTextColor),
-      )
-    );
+              color: CustomColors.blueTextColor),
+          minimumSize: Size(200, 40),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14.0),
+          ),
+          side: BorderSide(width: 1, color: CustomColors.blueTextColor),
+        ));
   }
 }
