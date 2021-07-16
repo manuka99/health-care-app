@@ -1,3 +1,4 @@
+import 'package:doctor_nest/pages/account/main.dart';
 import 'package:doctor_nest/pages/dashboard/bottom_navigation.dart';
 import 'package:doctor_nest/pages/monitor/main.dart';
 import 'package:doctor_nest/pages/register/main.dart';
@@ -34,7 +35,7 @@ Widget buildItemComponent(index) {
     case 1:
       return Monitor();
     case 2:
-      return RegisterHome();
+      return UserAccount();
     default:
       return Monitor();
   }

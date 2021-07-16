@@ -14,4 +14,8 @@ class CustomColors{
 //  icon
   static const iconNotSelected = Color(0xFFB0B3D0);
   static const iconSelected = Color(0xFF3A58FC);
+  static const icon2 = Color(0xFFABC5EA);
+
+//  shadow
+  static const shadowColor = Color.fromRGBO(0, 0, 0, 0.25);
 }
