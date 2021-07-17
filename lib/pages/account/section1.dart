@@ -3,11 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSection1 extends StatelessWidget {
-
-  String name = "Jitendra Raut";
-  String phone = "+91 97306270877";
+  String name = "Manuka Yasas";
+  String phone = "+92 0721146092";
   double profileState = 0.62;
-
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +71,8 @@ class ProfileSection1 extends StatelessWidget {
               SizedBox(height: 12),
               OutlinedButton(
                 style: ButtonStyle(
-                  side: MaterialStateProperty.resolveWith((states) => BorderSide(color: Colors.white)),
+                  side: MaterialStateProperty.resolveWith(
+                      (states) => BorderSide(color: Colors.white)),
                   backgroundColor: MaterialStateProperty.resolveWith<Color>(
                       (states) => (states.contains(MaterialState.pressed))
                           ? Colors.black12
@@ -95,13 +94,21 @@ class ProfileSection1 extends StatelessWidget {
             ],
           ),
           Positioned(
-            top: 20,
-            left: 0,
-            right: 0,
-            child: CircleAvatar(
-                backgroundImage: AssetImage("assets/images/user.png"),
-                radius: 40),
-          ),
+              top: 20,
+              left: 0,
+              right: 0,
+              child: CircleAvatar(
+                radius: 40,
+                child: ClipOval(
+                  child: Image.asset(
+                    "assets/images/user-avatar2.png",
+                    height: 80,
+                    width: 80,
+                    fit: BoxFit.cover,
+                    
+                  ),
+                ),
+              )),
         ],
       ),
     );

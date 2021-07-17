@@ -86,7 +86,7 @@ class RegisterMobile extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           Navigator.pushNamedAndRemoveUntil(
-                              context, "/", (r) => false);
+                              context, "/register/mobile/otp", (r) => false);
                         },
                         child: Text(
                           "Submit",
@@ -101,6 +101,9 @@ class RegisterMobile extends StatelessWidget {
                                   RoundedRectangleBorder>(
                               (states) => RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(18))),
+                          minimumSize: MaterialStateProperty.resolveWith<
+                              Size>(
+                                (states) => Size(52, 44)),
                           backgroundColor:
                               MaterialStateProperty.resolveWith<Color>(
                                   (states) {

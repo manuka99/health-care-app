@@ -3,6 +3,7 @@ import 'package:doctor_nest/pages/dashboard/main.dart';
 import 'package:doctor_nest/pages/intro/main.dart';
 import 'package:doctor_nest/pages/register/main.dart';
 import 'package:doctor_nest/pages/register/mobile/main.dart';
+import 'package:doctor_nest/pages/register/mobile/otp/main.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +19,8 @@ class DoctorNest extends StatelessWidget {
         "/": (context) => HomeDashBoard(),
         "/intro": (context) => IntroScreen(),
         "/register": (context) => RegisterHome(),
-        "/register/mobile": (context) => RegisterMobile()
+        "/register/mobile": (context) => RegisterMobile(),
+        "/register/mobile/otp": (context) => MobileOtp()
       },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

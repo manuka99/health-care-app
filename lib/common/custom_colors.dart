@@ -18,6 +18,7 @@ class CustomColors{
   static const iconSelected = Color(0xFF3A58FC);
   static const icon2 = Color(0xFFABC5EA);
   static const stoke = Color(0xFFE5D6FF);
+  static const starGreen = Color(0xFF27AE60);
 
 //  shadow
   static const shadowColor = Color.fromRGBO(0, 0, 0, 0.25);

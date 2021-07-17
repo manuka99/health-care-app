@@ -79,13 +79,33 @@ class _IntroScreenState extends State<IntroScreen> {
                     fontFamily: "Poppins",
                     fontWeight: FontWeight.w200,
                     color: CustomColors.blackDark1TextColor)),
+            SizedBox(
+              height: 40,
+            ),
+            OutlinedButton(
+                onPressed: () {
+                  onDonePress();
+                },
+                child: Text("Get Started"),
+                style: OutlinedButton.styleFrom(
+                  textStyle: TextStyle(
+                      fontSize: 12,
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w600,
+                      color: CustomColors.blueTextColor),
+                  minimumSize: Size(200, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14.0),
+                  ),
+                  side: BorderSide(width: 1, color: CustomColors.blueTextColor),
+                ))
           ],
         )));
   }
 
   void onDonePress() {
     // Do what you want
-    Navigator.pushNamedAndRemoveUntil(context, "/register", (r)=>false);
+    Navigator.pushNamedAndRemoveUntil(context, "/register", (r) => false);
   }
 
   @override
@@ -96,19 +116,6 @@ class _IntroScreenState extends State<IntroScreen> {
         showNextBtn: false,
         onDonePress: this.onDonePress,
         showSkipBtn: false,
-        showDoneBtn: true,
-        renderDoneBtn: Text("Get started"),
-        doneButtonStyle: OutlinedButton.styleFrom(
-          textStyle: TextStyle(
-              fontSize: 12,
-              fontFamily: "Poppins",
-              fontWeight: FontWeight.w600,
-              color: CustomColors.blueTextColor),
-          minimumSize: Size(200, 40),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14.0),
-          ),
-          side: BorderSide(width: 1, color: CustomColors.blueTextColor),
-        ));
+        showDoneBtn: false);
   }
 }
