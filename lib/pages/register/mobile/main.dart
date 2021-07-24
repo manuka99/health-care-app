@@ -3,8 +3,35 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RegisterMobile extends StatelessWidget {
+  var mobileNumberController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    void submitMobile() {
+      var mobile = mobileNumberController.text.trim();
+      if (mobile.startsWith("0")) mobile = mobile.replaceFirst("0", "");
+      if (mobile.length == 9)
+        Navigator.of(context).pushNamed("/register/mobile/otp", arguments: {
+          'mobile': "+94${mobile}",
+        });
+      else{
+        FocusScope.of(context).unfocus();
+        final errorSnackBar = SnackBar(
+          content: Text("Error: Please enter a valid mobile number"),
+          backgroundColor: Colors.redAccent,
+          duration: Duration(seconds: 8),
+          action: SnackBarAction(
+            label: 'X',
+            textColor: Colors.white,
+            onPressed: () {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            },
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
+      }
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -73,6 +100,7 @@ class RegisterMobile extends StatelessWidget {
                             flex: 8,
                             child: TextField(
                               keyboardType: TextInputType.phone,
+                              controller: mobileNumberController,
                               style: TextStyle(
                                   color: CustomColors.blackDark1TextColor),
                               decoration: InputDecoration(
@@ -85,8 +113,7 @@ class RegisterMobile extends StatelessWidget {
                       SizedBox(height: 20),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, "/register/mobile/otp", (r) => false);
+                          submitMobile();
                         },
                         child: Text(
                           "Submit",
@@ -101,9 +128,8 @@ class RegisterMobile extends StatelessWidget {
                                   RoundedRectangleBorder>(
                               (states) => RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(18))),
-                          minimumSize: MaterialStateProperty.resolveWith<
-                              Size>(
-                                (states) => Size(52, 44)),
+                          minimumSize: MaterialStateProperty.resolveWith<Size>(
+                              (states) => Size(52, 44)),
                           backgroundColor:
                               MaterialStateProperty.resolveWith<Color>(
                                   (states) {

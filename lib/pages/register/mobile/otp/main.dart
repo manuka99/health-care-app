@@ -1,10 +1,141 @@
+import 'dart:convert';
+
 import 'package:doctor_nest/common/custom_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
-class MobileOtp extends StatelessWidget {
+class MobileOtp extends StatefulWidget {
+  late String mobileNumber;
+
+  MobileOtp(Object? arguments) {
+    Map data = arguments as Map;
+    this.mobileNumber = data["mobile"];
+  }
+
+  @override
+  _MobileOtpState createState() => _MobileOtpState(this.mobileNumber);
+}
+
+class _MobileOtpState extends State<MobileOtp> {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  final codeController = TextEditingController();
+  SmsAutoFill smsAutoFill = SmsAutoFill();
+  late String mobileNumber;
+  late String verificationId;
+
+  _MobileOtpState(this.mobileNumber);
+
+  final codeSentSnackBar = SnackBar(
+    content: const Text('Code was sent successfully'),
+    duration: Duration(seconds: 4),
+    backgroundColor: CustomColors.starGreen,
+  );
+
+  final verifiedSnackBar = SnackBar(
+    content: const Text('Verification was completed'),
+    duration: Duration(seconds: 2),
+    backgroundColor: CustomColors.starGreen,
+  );
+
+  final errorSnackBar = (String? msg, BuildContext context) => SnackBar(
+        content: Text("Error: ${msg}"),
+        backgroundColor: Colors.redAccent,
+        duration: Duration(seconds: 8),
+        action: SnackBarAction(
+          label: 'X',
+          textColor: Colors.white,
+          onPressed: () {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          },
+        ),
+      );
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    startPhoneAuth();
+  }
+
+  Future<void> listenForSMSCode() async {
+    print("smsAutoFill.hint");
+    print(smsAutoFill.hint);
+    codeController.text = (await smsAutoFill.hint)!;
+  }
+
+  void startPhoneAuth() async {
+    print('mobile');
+    print(mobileNumber);
+    // await listenForSMSCode();
+    auth.verifyPhoneNumber(
+      // phoneNumber: '+94721146092',
+      phoneNumber: mobileNumber,
+      verificationCompleted: verificationCompleted,
+      verificationFailed: verificationFailed,
+      codeSent: onCodeSent,
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
+  }
+
+  void verificationCompleted(PhoneAuthCredential credential) async {
+    print("verificationCompleted");
+    ScaffoldMessenger.of(context).showSnackBar(verifiedSnackBar);
+    String? code = credential.smsCode;
+    codeController.text = code!;
+
+    // Sign the user with the credential
+    signInUserWithCredential(credential);
+  }
+
+  void verificationFailed(FirebaseAuthException error) {
+    print("error");
+    FocusScope.of(context).unfocus();
+    ScaffoldMessenger.of(context)
+        .showSnackBar(errorSnackBar(error.message, context));
+  }
+
+  void onCodeSent(String verificationId, int? resendToken) {
+    print("code sent");
+    FocusScope.of(context).unfocus();
+    ScaffoldMessenger.of(context).showSnackBar(codeSentSnackBar);
+    this.verificationId = verificationId;
+  }
+
+  void onSubmitPin() {
+    String code = codeController.text.trim().toString();
+    if (code.isNotEmpty && code is int && code.length == 6)
+      buildPhoneAuthCredential(code);
+    else {
+      FocusScope.of(context).unfocus();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(errorSnackBar("Code must have 6 Digits", context));
+    }
+  }
+
+  void buildPhoneAuthCredential(String smsCode) async {
+    // Create a PhoneAuthCredential with the code
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: this.verificationId, smsCode: smsCode);
+    // Sign the user with the credential
+    signInUserWithCredential(credential);
+  }
+
+  void signInUserWithCredential(AuthCredential credential) {
+    auth
+        .signInWithCredential(credential)
+        .then((value) =>
+            Navigator.pushNamedAndRemoveUntil(context, "/", (r) => false))
+        .onError((FirebaseAuthException error, stackTrace) {
+      FocusScope.of(context).unfocus();
+      return ScaffoldMessenger.of(context)
+          .showSnackBar(errorSnackBar(error.message, context));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,6 +229,7 @@ class MobileOtp extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       PinCodeTextField(
+                        controller: this.codeController,
                         appContext: context,
                         length: 6,
                         obscureText: false,
@@ -138,8 +270,7 @@ class MobileOtp extends StatelessWidget {
                       SizedBox(height: 20),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, "/", (r) => false);
+                          onSubmitPin();
                         },
                         child: Text(
                           "Submit",

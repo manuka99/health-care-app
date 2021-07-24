@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "948537378517",
+    "project_id": "doctor-nest",
+    "storage_bucket": "doctor-nest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948537378517:android:3bf2852b7f5e735d32445c",
+        "android_client_info": {
+          "package_name": "com.uee.doctor_nest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948537378517-mn2tj2t8du21t61381ft4ultckisau68.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uee.doctor_nest",
+            "certificate_hash": "5f019f5b8a20bb31f83cea3e4abf96f369649647"
+          }
+        },
+        {
+          "client_id": "948537378517-jlb776efnj41hadioc78cjnrg8qeomiu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDZOY1WeSmo_ouNtAaPZ0_C90rsrVB1R8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948537378517-jlb776efnj41hadioc78cjnrg8qeomiu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,8 +1,10 @@
 import 'package:doctor_nest/common/custom_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSection1 extends StatelessWidget {
+  FirebaseAuth _auth = FirebaseAuth.instance;
   String name = "Manuka Yasas";
   String phone = "+92 0721146092";
   double profileState = 0.62;
@@ -33,8 +35,11 @@ class ProfileSection1 extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.person, size: 28),
+                      onPressed: () {
+                        _auth.signOut();
+                        Navigator.pushNamed(context, "/register");
+                      },
+                      icon: Icon(Icons.logout, size: 28),
                       color: Colors.white),
                   IconButton(
                       onPressed: () {},
@@ -97,16 +102,20 @@ class ProfileSection1 extends StatelessWidget {
               top: 20,
               left: 0,
               right: 0,
-              child: CircleAvatar(
-                radius: 40,
-                child: ClipOval(
-                  child: Image.asset(
-                    "assets/images/user-avatar2.png",
-                    height: 80,
-                    width: 80,
-                    fit: BoxFit.cover,
-                    
-                  ),
+              child: Center(
+                child: Wrap(
+                  children: [
+                    Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage("assets/images/user-avatar2.png"),
+                              fit: BoxFit.cover),
+                          borderRadius: BorderRadius.circular(40),
+                          border: Border.all(width: 1, color: Colors.white)),
+                    ),
+                  ],
                 ),
               )),
         ],

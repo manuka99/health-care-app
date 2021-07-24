@@ -1,4 +1,5 @@
 import 'package:doctor_nest/pages/account/main.dart';
+import 'package:doctor_nest/pages/chat/main.dart';
 import 'package:doctor_nest/pages/dashboard/bottom_navigation.dart';
 import 'package:doctor_nest/pages/monitor/main.dart';
 import 'package:doctor_nest/pages/register/main.dart';
@@ -33,7 +34,7 @@ Widget buildItemComponent(index) {
     case 0:
       return Monitor();
     case 1:
-      return Monitor();
+      return SupportChat();
     case 2:
       return UserAccount();
     default:

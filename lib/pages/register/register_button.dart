@@ -5,17 +5,16 @@ import 'package:flutter/material.dart';
 class RegisterButton extends StatelessWidget {
   late IconData icon;
   late String title;
-  late String route;
+  late void Function() callback;
 
   RegisterButton(
-      {required this.icon, required this.title, required this.route});
+      {required this.icon, required this.title, required this.callback});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: () {
-        if (title == "Mobile Number")
-          Navigator.pushNamed(context, "/register/mobile");
+        this.callback();
       },
       label: Text(this.title,
           style: TextStyle(

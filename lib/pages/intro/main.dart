@@ -1,4 +1,5 @@
 import 'package:doctor_nest/common/custom_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
@@ -11,6 +12,8 @@ class IntroScreen extends StatefulWidget {
 
 @override
 class _IntroScreenState extends State<IntroScreen> {
+
+  FirebaseAuth _auth = FirebaseAuth.instance;
   List<Slide> slides = [];
 
   void initState() {
@@ -104,8 +107,11 @@ class _IntroScreenState extends State<IntroScreen> {
   }
 
   void onDonePress() {
-    // Do what you want
-    Navigator.pushNamedAndRemoveUntil(context, "/register", (r) => false);
+    User? user = _auth.currentUser;
+    if(user != null)
+      Navigator.pushNamedAndRemoveUntil(context, "/", (r) => false);
+    else
+      Navigator.pushNamedAndRemoveUntil(context, "/register", (r) => false);
   }
 
   @override
