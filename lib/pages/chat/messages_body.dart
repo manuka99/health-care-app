@@ -219,31 +219,48 @@ class _MessagesBodyState extends State<MessagesBody> {
               color: CustomColors.bg_grey),
           child: InkWell(
               onLongPress: () => deleteMSGAlertDialog(context, message.msgID),
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: message.message,
+              child: Column(
+                children: [
+                  Container(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      message.message,
+                      textAlign: TextAlign.right,
                       style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 12,
                       ),
                     ),
-                    WidgetSpan(
-                        child: Container(
-                      margin: const EdgeInsets.only(
-                        left: 6,
+                  ),
+                  SizedBox(height: 8),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: message.getFormattedSentDate(),
+                            style: TextStyle(
+                                fontFamily: "Poppins",
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          WidgetSpan(
+                              child: Container(
+                            margin: const EdgeInsets.only(left: 6),
+                            child: Icon(
+                              message.status == "unsent"
+                                  ? Icons.timelapse_sharp
+                                  : Icons.done_all_outlined,
+                              size: 16,
+                              color: Colors.white,
+                            ),
+                          )),
+                        ],
                       ),
-                      child: Icon(
-                        message.status == "unsent"
-                            ? Icons.timelapse_sharp
-                            : Icons.check_sharp,
-                        size: 14,
-                        color: Colors.white,
-                      ),
-                    )),
-                  ],
-                ),
+                    ),
+                  )
+                ],
               )),
         ),
       );
@@ -271,29 +288,47 @@ class _MessagesBodyState extends State<MessagesBody> {
                     topRight: Radius.circular(14),
                     bottomRight: Radius.circular(14)),
                 color: CustomColors.app_primary),
-            child: RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: message.message,
-                    style: TextStyle(
-                      fontFamily: "Poppins",
-                      fontSize: 12,
+            child: Column(
+              children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(message.message,
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        fontSize: 12,
+                      )),
+                ),
+                SizedBox(height: 8),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        WidgetSpan(
+                            child: Container(
+                          margin: const EdgeInsets.only(right: 6),
+                          child: Icon(
+                            message.status == "unsent"
+                                ? Icons.timelapse_sharp
+                                : Icons.done_all_outlined,
+                            size: 16,
+                            color: Colors.white,
+                          ),
+                        )),
+                        TextSpan(
+                          text: message.userID == ''
+                              ? 'Seen - TeamDN'
+                              : message.getFormattedSentDate(),
+                          style: TextStyle(
+                              fontFamily: "Poppins",
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                   ),
-                  WidgetSpan(
-                      child: Container(
-                    margin: const EdgeInsets.only(left: 6),
-                    child: Icon(
-                      message.status == "unsent"
-                          ? Icons.timelapse_sharp
-                          : Icons.check_sharp,
-                      size: 16,
-                      color: Colors.white,
-                    ),
-                  )),
-                ],
-              ),
+                )
+              ],
             )),
       );
     }

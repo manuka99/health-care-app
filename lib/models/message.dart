@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class Message {
   late String msgID;
@@ -41,5 +42,10 @@ class Message {
 
   void setStatus(String status) {
     this.status = status;
+  }
+
+  String getFormattedSentDate() {
+    final df = new DateFormat('dd MMM yyyy  hh:mm a');
+    return df.format(this.sendAt);
   }
 }
