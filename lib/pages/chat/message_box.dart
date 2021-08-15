@@ -1,28 +1,36 @@
 import 'package:doctor_nest/common/custom_colors.dart';
+import 'package:doctor_nest/models/message.dart';
 import 'package:doctor_nest/pages/chat/message_hints.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import 'package:uuid/uuid.dart';
 
 class MessageBox extends StatelessWidget {
+  late void Function(String) sendMessage;
+
   var messageController = TextEditingController();
 
   onHintSelected(String hint) {
     messageController.text += hint;
   }
 
-  onSendMessage() {
-
+  onSendMessage(BuildContext context) {
+    if (messageController.text.isNotEmpty) sendMessage(messageController.text);
+    messageController.text = "";
+    // FocusScope.of(context).requestFocus(FocusNode());
   }
+
+  MessageBox({required this.sendMessage});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 10, bottom: 20),
+      padding: EdgeInsets.only(top: 10, bottom: 10),
       child: Column(
         children: [
           MessageHints(onHintSelected),
-          SizedBox(height: 14),
+          SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -44,26 +52,37 @@ class MessageBox extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: TextField(
-                    controller: messageController,
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontFamily: "Poppins",
-                        color: Colors.black),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 14),
-                      hintText: 'Enter a message',
-                      suffixIcon: Transform.rotate(
-                        angle: -34 * math.pi / 180,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          minLines: 1,
+                          maxLines: 4,
+                          autofocus: true,
+                          keyboardType: TextInputType.text,
+                          controller: messageController,
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: "Poppins",
+                              color: Colors.black),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 14),
+                            hintText: 'Type a message',
+                          ),
+                        ),
+                      ),
+                      Transform.rotate(
+                        angle: 0 * math.pi / 180,
                         child: IconButton(
                           onPressed: () {
-                            onSendMessage();
+                            onSendMessage(context);
                           },
                           icon: Icon(
                             Icons.send,
@@ -72,7 +91,7 @@ class MessageBox extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),

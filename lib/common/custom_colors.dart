@@ -3,6 +3,7 @@ import 'dart:ui';
 class CustomColors{
   static const app_primary = Color(0xFF6E78F7);
   static const app_bg_scaffold = Color(0xFFF5F5F5);
+  static const bg_grey = Color(0xFF94A5A6); //for message
 
 //  text
   static const lightTextColor = Color(0xFFF6F6F6);

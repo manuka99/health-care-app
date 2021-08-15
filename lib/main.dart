@@ -17,13 +17,13 @@ Future<void> main() async {
 class DoctorNest extends StatelessWidget {
   @override
   void initState() async {
-    await () => ("");
+    // await () => ("");
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: "/intro",
+      initialRoute: "/register",
       onGenerateRoute: (RouteSettings settings) {
         print('build route for ${settings.name}');
         var routes = <String, WidgetBuilder>{

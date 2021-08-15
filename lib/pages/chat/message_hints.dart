@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 
 class MessageHints extends StatelessWidget {
   List<String> hints = [
-    "Hello",
-    "Doctor",
+    "Hi, Doctor",
+    "Are you free today?",
+    "My Medicine",
+    "Clinic",
     "Emergency",
-    "Hello",
-    "Doctor",
-    "Emergency",
-    "Hello",
-    "Doctor",
-    "Emergency"
+    "Lab Reports",
+    "Channel Doctor",
+    "List the Doctors",
+    "Can I place an appointment today?"
   ];
 
   late void Function(String hint) onHintSelected;

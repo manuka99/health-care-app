@@ -6,20 +6,20 @@ class ChatHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 82,
+      height: 72,
       child: Row(
         children: [
           SizedBox(width: 28),
           Container(
-            height: 52,
-            width: 52,
+            height: 46,
+            width: 46,
             // clipBehavior: Clip.antiAliasWithSaveLayer,
             decoration: BoxDecoration(
                 color: Colors.white,
                 image: DecorationImage(
                     image: AssetImage("assets/images/support-user.jpg"),
                     fit: BoxFit.cover),
-                borderRadius: BorderRadius.circular(40),
+                borderRadius: BorderRadius.circular(34),
                 border: Border.all(color: Colors.white, width: 2)),
             child: Stack(
               children: [

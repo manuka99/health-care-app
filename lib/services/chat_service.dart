@@ -2,31 +2,50 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor_nest/models/message.dart';
 
 class ChatService {
-  final messageRef =
-  FirebaseFirestore.instance.collection('movies').withConverter<Message>(
-    fromFirestore: (snapshot, _) => Message.fromJson(snapshot.data()!),
-    toFirestore: (message, _) => message.toJson(),
-  );
+  static final messageRef =
+      FirebaseFirestore.instance.collection('messages').withConverter<Message>(
+            fromFirestore: (snapshot, _) => Message.fromJson(snapshot.data()!),
+            toFirestore: (message, _) => message.toJson(),
+          );
 
-  ChatService(){}
+  ChatService() {}
 
-  Future<List<QueryDocumentSnapshot<Message>>> getMessages(String userId,
-      int messagesCount, String lastMessageId) async {
-    List<QueryDocumentSnapshot<Message>> messages = await messageRef
-        .where('from', isEqualTo: userId)
+  static Future<Iterable<Message>> getMessages(
+      String userId, int messagesCount, DateTime? lastSendAt) async {
+    // print(userId);
+    // print(messagesCount);
+    // print(lastMessageId);
+
+    Query<Message> messagesQuery = messageRef
+        .where('userID', isEqualTo: userId)
         .orderBy('sendAt', descending: true)
-        .startAfter([lastMessageId])
-        .limit(messagesCount)
+        .limit(messagesCount);
+
+    if (lastSendAt != null)
+      messagesQuery = messagesQuery.startAfter([lastSendAt]);
+
+    Iterable<Message> messages = await messagesQuery
         .get()
-        .then((snapshot) => snapshot.docs);
+        .then((snapshot) => snapshot.docs.map((doc) => doc.data()));
+
     return messages;
   }
 
-  void sendMessage(Message message) async {
-    await messageRef.add(message);
+  static Future<Message> sendMessage(Message message) async {
+    Message createMSG = new Message(
+        message: message.message,
+        msgID: message.msgID,
+        userID: message.userID,
+        participant: message.participant,
+        sendAt: message.sendAt,
+        status: "sent");
+    await messageRef.add(createMSG);
+    return message;
   }
 
-  void deleteMessage(messageId) async {
-    await messageRef.doc(messageId).delete();
+  static void deleteMessage(messageId) async {
+    print('delete from db' + messageId);
+    await messageRef.where('msgID', isEqualTo: messageId).get().then(
+        (snapshot) => snapshot.docs.forEach((doc) => doc.reference.delete()));
   }
 }
